@@ -13,6 +13,10 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const AV_KEY = process.env.ALPHA_VANTAGE_KEY;
 const METAL_KEY = process.env.METALPRICE_API_KEY;
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function upsertPrice(commodityId, dateStr, price) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/prices`, {
     method: "POST",
@@ -65,8 +69,11 @@ async function main() {
   }
 
   await fetchAlphaVantage("wti_crude", "WTI");
+  await sleep(15000); // Alpha Vantage free tier: wait between calls to avoid rate limiting
   await fetchAlphaVantage("wheat", "WHEAT");
+  await sleep(15000);
   await fetchAlphaVantage("cotton", "COTTON");
+
   await fetchGold();
 
   // Soybean Oil and Copra have no reliable free live API (see project notes).
