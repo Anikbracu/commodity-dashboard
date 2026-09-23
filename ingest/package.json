@@ -1,0 +1,12 @@
+{
+  "name": "commodity-dashboard-ingest",
+  "version": "1.0.0",
+  "description": "Fetches live commodity prices and writes them to Supabase.",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-prices.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
